@@ -10,6 +10,7 @@ const initialState = {
   message: '',
 };
 
+//CREATE TICKET
 export const createTicket = createAsyncThunk(
   'ticket/create',
   async (ticketdata, thunkAPI) => {
@@ -20,6 +21,25 @@ export const createTicket = createAsyncThunk(
       return await ticketService.createTicket(ticketdata, token);
     } catch (error) {
       console.log('redux console error', error);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+//get TICKETs
+export const getTickets = createAsyncThunk(
+  'ticket/getAll',
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await ticketService.getTickets(token);
+    } catch (error) {
+      // console.log('redux console error', error);
       const message =
         (error.response &&
           error.response.data &&

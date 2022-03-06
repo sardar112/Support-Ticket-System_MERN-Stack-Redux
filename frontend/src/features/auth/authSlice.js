@@ -14,7 +14,7 @@ const initialState = {
 export const register = createAsyncThunk(
   'auth/register',
   async (user, thunkAPI) => {
-    console.log('redux console', user);
+    // console.log('redux console', user);
 
     try {
       return await authService.registerUser(user);
@@ -32,11 +32,11 @@ export const register = createAsyncThunk(
 );
 
 export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
-  console.log('loggggggginnnnn', user);
+  // console.log('loggggggginnnnn', user);
   try {
     return await authService.loginUser(user);
   } catch (error) {
-    console.log('redux console error', error);
+    // console.log('redux console error', error);
     const message =
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
@@ -68,7 +68,11 @@ export const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        // console.log('state ', state);
+        // console.log('state action payload', action.payload);
+
         state.user = action.payload;
+        // console.log('uuusssseeeerrrrrrrrr', state.user);
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;

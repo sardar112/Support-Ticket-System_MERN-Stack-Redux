@@ -12,11 +12,11 @@ const signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body);
   newUser.password = undefined;
   if (newUser) {
-    const token = signToken(newUser._id);
     res.status(201).json({
-      status: 'Success',
-      token,
-      data: newUser,
+      _id: newUser._id,
+      name: newUser.name,
+      email: newUser.email,
+      token: signToken(newUser._id),
     });
   } else {
     return next(new AppError(`Invalid User Data  `, 422));
