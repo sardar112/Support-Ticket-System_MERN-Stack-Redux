@@ -10,7 +10,6 @@ const signup = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
   if (user) return next(new AppError(`User already exist  `, 400));
   const newUser = await User.create(req.body);
-  newUser.password = undefined;
   if (newUser) {
     res.status(201).json({
       _id: newUser._id,
@@ -36,10 +35,12 @@ const login = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect email or password', 401));
   }
 
-  const token = await signToken(user._id);
   res.status(200).json({
     status: 'Success',
-    token,
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    token: signToken(user._id),
   });
 });
 
