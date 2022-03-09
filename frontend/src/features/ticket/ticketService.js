@@ -23,8 +23,19 @@ const getTickets = async (token) => {
   const response = await axios.get(`${API_URL}/tickets`, config);
   return response.data;
 };
+//get tickets
+const getTicket = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get(`${API_URL}/tickets/${id}`, config);
+  return response.data;
+};
 const tikcetService = {
   createTicket,
   getTickets,
+  getTicket,
 };
 export default tikcetService;

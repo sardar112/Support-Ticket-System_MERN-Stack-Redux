@@ -39,9 +39,11 @@ function Tickets() {
           <div>Status</div>
           <div></div>
         </div>
-        {tickets.map((ticket) => (
-          <TicketItem key={ticket._id} ticket={ticket} />
-        ))}
+        {tickets.tickets && tickets.tickets.length
+          ? tickets.tickets.map((ticket) => (
+              <TicketItem key={ticket._id} ticket={ticket} />
+            ))
+          : 'no record'}
       </div>
     </>
   );
