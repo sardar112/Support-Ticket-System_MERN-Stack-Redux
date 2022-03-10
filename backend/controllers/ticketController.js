@@ -75,17 +75,13 @@ const updateTicket = catchAsync(async (req, res, next) => {
     return next(AppError('You are not allowed to access this ticket', 401));
   }
 
-  ticket.description = req.body.description;
-  ticket.product = req.body.product;
-  ticket.status = 'closed';
-  const updatedTicket = await ticket.save();
-  res
-    .status(200)
-    .json({
-      status: 'Success',
-      message: 'Ticket updated successfully',
-      data: updatedTicket,
-    });
+  const updatedTicket = await Ticket.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  );
+
+  res.status(200).json(updatedTicket);
 });
 
 module.exports = {
